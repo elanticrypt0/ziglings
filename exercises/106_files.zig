@@ -35,7 +35,7 @@ pub fn main() !void {
         // by doing nothing
         //
         // we want to catch error.PathAlreadyExists and do nothing
-        ??? => {},
+        error.PathAlreadyExists => error.PathAlreadyExists,
         // if there's any other unexpected error we just propagate it through
         else => return e,
     };
@@ -55,7 +55,7 @@ pub fn main() !void {
     // but here we are not yet done writing to the file
     // if only there were a keyword in Zig that
     // allowed you to "defer" code execution to the end of the scope...
-    file.close();
+    defer file.close();
 
     // you are not allowed to move these two lines above the file closing line!
     const byte_written = try file.write("It's zigling time!");
